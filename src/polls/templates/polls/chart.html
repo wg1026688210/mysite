@@ -1,0 +1,112 @@
+{%extends 'polls/base.html'%}
+{% load staticfiles %}
+<meta Charset="utf-8">
+{%block content%}
+ <div id="main">wwwww</div>
+<script src="{% static 'polls/build/dist/echarts.js' %}"></script>
+	 <script type="text/javascript">
+        
+	  <div id="content1" ></div>
+		 <!-- ECharts单文件引入 -->
+	    <script src="{% static 'polls/build/dist/echarts.js' %}"></script>
+		 <script type="text/javascript">
+	        // 路径配置
+	        require.config({
+	            paths: {
+	                echarts: '{% static 'polls/build/dist' %}'
+	            }
+	        });
+
+			  // 使用
+	        require(
+	            [
+	                'echarts',
+	                'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
+	            ],
+	            function (ec) {
+	                // 基于准备好的dom，初始化echarts图表
+	                var myChart = ec.init(document.getElementById('main')); 
+	                
+	                option = {
+	    title : {
+	        text: '问题编号',
+	        subtext: '式样数据'
+	    },
+	    tooltip : {
+	        trigger: 'axis'
+	    },
+	    legend: {
+	        data:['最大数','最小数']
+	    },
+	    toolbox: {
+	        show : true,
+	        feature : {
+	            mark : {show: true},
+	            dataView : {show: true, readOnly: false},
+	            magicType : {show: true, type: ['line', 'bar']},
+	            restore : {show: true},
+	            saveAsImage : {show: true}
+	        }
+	    },
+	    calculable : true,
+	    xAxis : [
+	        {
+	            type : 'category',
+	            boundaryGap : false,
+	            data : [
+                 
+                 ]
+	        }
+	    ],
+	    yAxis : [
+	        {
+	            type : 'value',
+	            axisLabel : {
+	                formatter: '{value} °C'
+	            }
+	        }
+	    ],
+	    series : [
+	        {
+	            name:'高数',
+	            type:'line',
+	            data:[7,6,5,4,3,2,1],
+	            markPoint : {
+	                data : [
+	                    {type : 'max', name: '最大值'},
+	                    {type : 'min', name: '最小值'}
+	                ]
+	            },
+	            markLine : {
+	                data : [
+	                    {type : 'average', name: '平均值'}
+	                ]
+	            }
+	        },
+	        {
+	            name:'底数',
+	            type:'line',
+	            data:[1,2,3,4,5,6,7],
+	            markPoint : {
+	                data : [
+	                    {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
+	                ]
+	            },
+	            markLine : {
+	                data : [
+	                    {type : 'average', name : '平均值'}
+	                ]
+	            }
+	        }
+	    ]
+	};
+	        
+	                // 为echarts对象加载数据 
+	                myChart.setOption(option); 
+	            }
+	        );
+	    </script>
+	    </script>
+    {%endblock%}
+  
+ 
